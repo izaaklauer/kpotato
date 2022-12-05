@@ -1,9 +1,9 @@
 syntax = "proto3";
-package %%wp_project%%.v1;
+package kpotato.v1;
 
 import "google/protobuf/timestamp.proto";
 
-service %%Wp_project%%Service {
+service KpotatoService {
 
   // HelloWorld is the default rpc. Feel free to delete.
   rpc HelloWorld(HelloWorldRequest) returns (HelloWorldResponse) {}

@@ -6,17 +6,17 @@ import (
 	"net"
 	"os"
 
-	"github.com/izaaklauer/%%wp_project%%/config"
-	%%wp_project%%v1 "github.com/izaaklauer/%%wp_project%%/gen/proto/go/%%wp_project%%/v1"
-	"github.com/izaaklauer/%%wp_project%%/server"
+	"github.com/izaaklauer/kpotato/config"
+	kpotatov1 "github.com/izaaklauer/kpotato/gen/proto/go/kpotato/v1"
+	"github.com/izaaklauer/kpotato/server"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
 
 func main() {
-	fmt.Println("starting %%wp_project%%.......")
-	defer fmt.Println("%%wp_project%% exiting!")
+	fmt.Println("starting kpotato.......")
+	defer fmt.Println("kpotato exiting!")
 
 	err := serve()
 	if err != nil {
@@ -42,9 +42,9 @@ func serve() error {
 	}
 
 	// Start the service
-	%%wp_project%%Server, err := server.New%%Wp_project%%Server(c.%%Wp_project%%)
+	kpotatoServer, err := server.NewKpotatoServer(c.Kpotato)
 	if err != nil {
-		return errors.Wrapf(err, "failed to start %%wp_project%% server")
+		return errors.Wrapf(err, "failed to start kpotato server")
 	}
 
 	listener, err := net.Listen("tcp", c.Server.BindAddr)
@@ -53,7 +53,7 @@ func serve() error {
 	}
 	grpcServer := grpc.NewServer()
 
-	%%wp_project%%v1.Register%%Wp_project%%ServiceServer(grpcServer, %%wp_project%%Server)
+	kpotatov1.RegisterKpotatoServiceServer(grpcServer, kpotatoServer)
 	reflection.Register(grpcServer)
 
 	log.Printf("Serving on %q", c.Server.BindAddr)
